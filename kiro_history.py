@@ -615,10 +615,14 @@ def main():
     if result and isinstance(result, tuple) and result[0] == "resume":
         session = result[1]
         cwd = session["cwd"]
+        session_id = session.get("session_id", "")
         print(f"\nResuming session: {session['title']}")
         print(f"Directory: {cwd}\n")
         os.chdir(cwd)
-        os.execvp("kiro-cli", ["kiro-cli", "chat", "--resume"])
+        if session_id:
+            os.execvp("kiro-cli", ["kiro-cli", "chat", "--resume-id", session_id])
+        else:
+            os.execvp("kiro-cli", ["kiro-cli", "chat", "--resume"])
 
 
 if __name__ == "__main__":
