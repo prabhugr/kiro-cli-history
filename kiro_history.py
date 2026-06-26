@@ -618,7 +618,9 @@ def main():
         print(f"\nResuming session: {session['title']}")
         print(f"Directory: {cwd}\n")
         os.chdir(cwd)
-        os.execvp("kiro-cli", ["kiro-cli", "chat", "--resume"])
+        session_id = session.get("session_id", "")
+        cmd = ["kiro-cli", "chat", "--resume-id", session_id] if session_id else ["kiro-cli", "chat", "--resume"]
+        os.execvp("kiro-cli", cmd)
 
 
 if __name__ == "__main__":
